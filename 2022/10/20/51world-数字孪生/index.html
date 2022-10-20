@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="huyu">
 <meta property="og:description" content="💡 概念解释：数字孪生是充分利用物理模型、传感器更新、运行历史等数据，集成多学科、多物理量、多尺度、多概率的仿真过程，在虚拟空间中完成映射，从而反映相对应的实体装备的全生命周期过程。数字孪生是一种超越现实的概念，可以被视为一个或多个重要的、彼此依赖的装备系统的数字映射系统。 51world数字孪生平台💡 平台简介：51world数字孪生城市平台采用“多元数据处理，城市底座生成，应用界面开发，数">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/27820863/1652862184235-dacfa6a7-ceed-44f0-9edb-36a92f02ecfb.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/27820863/1652862480365-8902a041-698f-43fc-ac24-05915654523a.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020152930420.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020152955883.png">
 <meta property="article:published_time" content="2022-10-20T07:13:58.000Z">
-<meta property="article:modified_time" content="2022-10-20T07:14:24.057Z">
+<meta property="article:modified_time" content="2022-10-20T07:31:15.028Z">
 <meta property="article:author" content="Hu Yu">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2022/png/27820863/1652862184235-dacfa6a7-ceed-44f0-9edb-36a92f02ecfb.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020152930420.png">
   
   
   
@@ -249,7 +249,7 @@
         
         
         
-          34 分钟
+          35 分钟
         
       </span>
     
@@ -327,17 +327,17 @@
 <p>SuperAPI提供可在WEB端进行调用的方法，以便用户从前端页面直接向51WORLD云渲染平台程序发送指令。同时通过注册函数监听51WORLD云渲染程序发送的事件，用户再跟据事件类型，在WEB端中对此类事件做出响应。</p>
 <h4 id="云渲染技术描述："><a href="#云渲染技术描述：" class="headerlink" title="云渲染技术描述："></a>云渲染技术描述：</h4><p>在拥有GPU的服务器部署使用图形API（D3D\OpenGL）进行实时渲染的3D可视化应用软件（下称“渲染服务软件”），通过Nvidia Enc实时编码渲染的图像到h264格式（低延迟），并通过<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebRTC_API/Signaling_and_video_calling">WEB-RTC</a>协议（流控）发送到客户端。客户端是一个能够运行在手机、平板电脑、普通PC主机的应用程序（或者网页），用作3D可视化的展示，并且收集用户的操作通过<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebRTC_API/Signaling_and_video_calling">WEB-RTC</a>回传给服务器。最终，这套解决方案用来实现复杂3D应用（照片级真实的渲染效果）能够在手机、平板电脑、普通PC主机、甚至网页上进行远程的展示与实时的互动。</p>
 <h4 id="API安装引用"><a href="#API安装引用" class="headerlink" title="API安装引用"></a>API安装引用</h4><p>文档地址：<a target="_blank" rel="noopener" href="http://superapi.51aes.com/study">http://superapi.51aes.com/study</a></p>
-<p>① 直接用 <script> 引入SuperAPI:</p>
+<p>① 直接用 &lt;script 引入SuperAPI:</p>
 <p>引入指定版本</p>
 <pre><code class="hljs">&lt;script src=&quot;http://superapi.51aes.com/dist/superAPI-6.2.0.min.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 <p>② 通过npm, cnpm, yarn安装: </p>
 <p>✍️npm i 51superapi	✍️cnpm install 51superapi		✍️yarn add 51superapi </p>
-<p>✍️import cloudRenderer from "51superapi"</p>
+<p>✍️import cloudRenderer from “51superapi”</p>
 <h4 id="superAPI-与-WDP-平台场景链接"><a href="#superAPI-与-WDP-平台场景链接" class="headerlink" title="superAPI 与 WDP 平台场景链接"></a>superAPI 与 WDP 平台场景链接</h4><p>渲染口令：在 WDP 管理中心中获取案例渲染口令</p>
 <p>渲染地址：</p>
 <p>云渲染则直接填写云渲染地址即可</p>
-<p>本地渲染：本机ip+8889	("<a href="http://127.0.0.1:8889&quot;">http://127.0.0.1:8889&quot;</a>)</p>
+<p>本地渲染：本机ip+8889	(“<a href="http://127.0.0.1:8889&quot;">http://127.0.0.1:8889&quot;</a>)</p>
 <p>具体文档：<a target="_blank" rel="noopener" href="http://superapi.51aes.com/study">http://superapi.51aes.com/study</a></p>
 <p>启动渲染代码块：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> cloudRender = <span class="hljs-keyword">new</span> <span class="hljs-title function_">cloudRenderer</span>(<span class="hljs-string">&quot;player&quot;</span>, <span class="hljs-number">0</span>);<br><span class="hljs-keyword">var</span> cloudurl = <span class="hljs-string">&quot;http://127.0.0.1:8889&quot;</span> <span class="hljs-comment">//本地渲染服务地址, 8889:固定端口</span><br><span class="hljs-keyword">var</span> orderID = <span class="hljs-string">&#x27;a5EEE4Fe&#x27;</span> <span class="hljs-comment">//渲染口令</span><br><span class="hljs-comment">//启动渲染</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">start51</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-title function_">fetch</span>(<span class="hljs-string">`<span class="hljs-subst">$&#123;cloudurl&#125;</span>/Renderers/Any/order`</span>, &#123;<br>    <span class="hljs-attr">method</span>: <span class="hljs-string">&quot;POST&quot;</span>,<br>    <span class="hljs-attr">headers</span>: &#123;<br>      <span class="hljs-string">&quot;Content-type&quot;</span>: <span class="hljs-string">&quot;application/json&quot;</span><br>    &#125;,<br>    <span class="hljs-attr">body</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(&#123;<br>      <span class="hljs-attr">order</span>: orderID,<br>      <span class="hljs-attr">width</span>: <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span>,<br>      <span class="hljs-attr">height</span>: <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerHeight</span><br>    &#125;)<br>    <span class="hljs-comment">//① order 渲染口令必填; ② width, height: 设置云渲染输出分辨率(此设置为固定分辨率,可选; 默认以云渲染客户端设置的分辨率输出)</span><br>  &#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (!res.<span class="hljs-property">ok</span>) &#123;<br>      <span class="hljs-keyword">throw</span> <span class="hljs-title class_">Error</span>(res.<span class="hljs-property">statusText</span>)<br>    &#125;<br>    <span class="hljs-keyword">return</span> res.<span class="hljs-title function_">json</span>()<br>  &#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">json</span> =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (json.<span class="hljs-property">url</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(json.<span class="hljs-property">url</span>, <span class="hljs-string">&#x27;云渲染url&#x27;</span>);<br>      <span class="hljs-comment">//启动云渲染</span><br>      cloudRender.<span class="hljs-title class_">SuperAPI</span>(<span class="hljs-string">&quot;StartRenderCloud&quot;</span>, json.<span class="hljs-property">url</span>);<br>      <span class="hljs-comment">//事件注册</span><br>      cloudRender.<span class="hljs-title class_">SuperAPI</span>(<span class="hljs-string">&quot;RegisterCloudResponse&quot;</span>, myHandleResponseFunction);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(json.<span class="hljs-property">message</span>);<br>    &#125;<br>  &#125;).<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">&#x27;Error: &#x27;</span>, error);<br>  &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -391,13 +391,13 @@
 </ol>
 </li>
 </ol>
-<h4 id="具体面板："><a href="#具体面板：" class="headerlink" title="具体面板："></a>具体面板：</h4><p><img src="https://cdn.nlark.com/yuque/0/2022/png/27820863/1652862184235-dacfa6a7-ceed-44f0-9edb-36a92f02ecfb.png" srcset="/img/loading.gif" lazyload alt="img"></p>
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p>51world平台：<a target="_blank" rel="noopener" href="https://www.51aes.com/">https://www.51aes.com/</a></p>
+<h4 id="具体面板："><a href="#具体面板：" class="headerlink" title="具体面板："></a>具体面板：</h4><p><img src="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020152930420.png" srcset="/img/loading.gif" lazyload alt="image-20221020152930420"></p>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p>51world平台：<a target="_blank" rel="noopener" href="https://www.51aes.com/">https://www.51aes.com/</a></p>
 <p>PaaS平台使用说明：<a target="_blank" rel="noopener" href="https://djp2gcp2um.feishu.cn/docs/doccncXWIo0B47godjUyVf3N9Fe#">https://djp2gcp2um.feishu.cn/docs/doccncXWIo0B47godjUyVf3N9Fe#</a></p>
 <p>SuperAPI开发手册：<a target="_blank" rel="noopener" href="http://superapi.51aes.com/guide">http://superapi.51aes.com/guide</a></p>
 <p>开发者社区：<a target="_blank" rel="noopener" href="https://bbs.51aes.com/">https://bbs.51aes.com/</a></p>
 <p>官方qq群：（注册开发者后发送注册账号即可通过验证）</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/27820863/1652862480365-8902a041-698f-43fc-ac24-05915654523a.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020152955883.png" srcset="/img/loading.gif" lazyload alt="image-20221020152955883"></p>
 
                 
               </div>

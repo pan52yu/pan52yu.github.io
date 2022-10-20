@@ -23,17 +23,17 @@
 <meta property="og:site_name" content="huyu">
 <meta property="og:description" content="参考文献 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;songyaru&#x2F;p&#x2F;15078091.html  实现方式 不使用插件直接进行pdf预览时，对于小文件没有任何问题，但在预览一个305M，近400页的pdf文件，打开pdf直接拉到最后几页，会造成浏览器崩溃，于是尝试使用pdf.js的插件方式进行pdf预览，解决大文件浏览器崩溃的问题。  使用方法1.下载pdfjs 官网：http:&#x2F;&#x2F;m">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/29482014/1665998457111-1a785b30-b1c6-4205-af93-c01b846caab8.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/29482014/1665998434167-4a807942-6b6d-4f0e-bdad-951b53ead5d4.png?x-oss-process=image/resize,w_358,limit_0">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/29482014/1665997892750-7f1fa914-c891-4db5-8f8a-7280dd265719.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/29482014/1665998134122-49865dfa-6fc6-424f-b2da-fb6aedc793b9.png">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2022/png/29482014/1665998243396-0e52c9b2-f7db-42d8-a81d-affbd7ddb07e.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020153026258.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020153036289.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020153049688.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020153059956.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020153109185.png">
 <meta property="article:published_time" content="2022-10-20T06:51:21.000Z">
-<meta property="article:modified_time" content="2022-10-20T06:59:16.178Z">
+<meta property="article:modified_time" content="2022-10-20T07:31:11.125Z">
 <meta property="article:author" content="Hu Yu">
 <meta property="article:tag" content="js">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2022/png/29482014/1665998457111-1a785b30-b1c6-4205-af93-c01b846caab8.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020153026258.png">
   
   
   
@@ -305,9 +305,9 @@
 <h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h6 id="1-下载pdfjs"><a href="#1-下载pdfjs" class="headerlink" title="1.下载pdfjs"></a>1.下载pdfjs</h6><blockquote>
 <p>官网：<a target="_blank" rel="noopener" href="http://mozilla.github.io/pdf.js/getting_started/#download">http://mozilla.github.io/pdf.js/getting_started/#download</a></p>
 </blockquote>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/29482014/1665998457111-1a785b30-b1c6-4205-af93-c01b846caab8.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020153026258.png" srcset="/img/loading.gif" lazyload alt="image-20221020153026258"></p>
 <h6 id="2-拖入项目中"><a href="#2-拖入项目中" class="headerlink" title="2.拖入项目中"></a>2.拖入项目中</h6><p>将安装包放入中public文件夹下</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/29482014/1665998434167-4a807942-6b6d-4f0e-bdad-951b53ead5d4.png?x-oss-process=image/resize,w_358,limit_0" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020153036289.png" srcset="/img/loading.gif" lazyload alt="image-20221020153036289"></p>
 <h6 id="3-页面中使用"><a href="#3-页面中使用" class="headerlink" title="3.页面中使用"></a>3.页面中使用</h6><p>（1）直接使用</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">window</span>.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;/pdf/web/viewer.html?file=&#x27;</span> + path);<span class="hljs-comment">//path是文件的全路径地址</span><br></code></pre></td></tr></table></figure>
 
@@ -325,13 +325,13 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> params = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(<span class="hljs-literal">null</span>);<br><span class="hljs-keyword">var</span> rangeTransport = <span class="hljs-literal">null</span>,<br>  worker = <span class="hljs-literal">null</span>;<br><br><span class="hljs-comment">// 添加设置token代码</span><br>params[<span class="hljs-string">&#x27;httpHeaders&#x27;</span>] = &#123;<br>  <span class="hljs-string">&quot;Authentication&quot;</span>: <span class="hljs-variable language_">window</span>.<span class="hljs-property">localStorage</span>.<span class="hljs-title function_">getItem</span>(<span class="hljs-string">&#x27;TOKEN&#x27;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h6 id="3-去掉pdf预览顶部的下载等"><a href="#3-去掉pdf预览顶部的下载等" class="headerlink" title="3.去掉pdf预览顶部的下载等"></a>3.去掉pdf预览顶部的下载等</h6><p>解决：找到web下viewer.html文件，找到相对应的控制设置样式visibility:hidden即可 </p>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/29482014/1665997892750-7f1fa914-c891-4db5-8f8a-7280dd265719.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020153049688.png" srcset="/img/loading.gif" lazyload alt="image-20221020153049688"></p>
 <h6 id="4-分段加载"><a href="#4-分段加载" class="headerlink" title="4.分段加载"></a>4.分段加载</h6><p>对于一些比较大的pdf文件，我们需要做到分段加载，否则会使界面卡死</p>
 <p>解决：</p>
 <p>（1）找到web下viewer.js，将disableAutoFetch、disableStream均改为true</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/29482014/1665998134122-49865dfa-6fc6-424f-b2da-fb6aedc793b9.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020153059956.png" srcset="/img/loading.gif" lazyload alt="image-20221020153059956"></p>
 <p>（2）找到build&#x2F;pdf.js文件，寻找DEFAULT_RANGE_CHUNK_SIZE配置项，并修改为65536*16</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2022/png/29482014/1665998243396-0e52c9b2-f7db-42d8-a81d-affbd7ddb07e.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221020153109185.png" srcset="/img/loading.gif" lazyload alt="image-20221020153109185"></p>
 
                 
               </div>

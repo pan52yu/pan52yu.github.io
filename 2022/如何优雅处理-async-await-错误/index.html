@@ -16,23 +16,25 @@
   <meta name="author" content="Hu Yu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="待完善    寻求简单有效的debug方法，少走弯路，更高效的修改bug  1、setTimeout  在我们的代码中，可能会遇到鼠标悬浮出现提示，此时想要调试悬浮的DOM时会很困难，此时可以使用定时器去进行一个debug  123setTimeout(function() &amp;#123;  debugger;&amp;#125;, 3000);   2、console 开发中使用最多的console">
+    <meta name="description" content="借用 await-to-js 库https:&#x2F;&#x2F;github.com&#x2F;scopsy&#x2F;await-to-jshttps:&#x2F;&#x2F;blog.grossman.io&#x2F;how-to-write-async-await-without-try-catch-blocks-in-javascript&#x2F;   之前处理异步请求时是这样的： 1234567891011121314151617async asyncTas">
 <meta property="og:type" content="article">
-<meta property="og:title" content="前端调试代码技巧">
-<meta property="og:url" content="https://pan52yu.github.io/2022/%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E4%BB%A3%E7%A0%81%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:title" content="如何优雅处理 async await 错误">
+<meta property="og:url" content="https://pan52yu.github.io/2022/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86-async-await-%E9%94%99%E8%AF%AF/index.html">
 <meta property="og:site_name" content="huyu">
-<meta property="og:description" content="待完善    寻求简单有效的debug方法，少走弯路，更高效的修改bug  1、setTimeout  在我们的代码中，可能会遇到鼠标悬浮出现提示，此时想要调试悬浮的DOM时会很困难，此时可以使用定时器去进行一个debug  123setTimeout(function() &amp;#123;  debugger;&amp;#125;, 3000);   2、console 开发中使用最多的console">
+<meta property="og:description" content="借用 await-to-js 库https:&#x2F;&#x2F;github.com&#x2F;scopsy&#x2F;await-to-jshttps:&#x2F;&#x2F;blog.grossman.io&#x2F;how-to-write-async-await-without-try-catch-blocks-in-javascript&#x2F;   之前处理异步请求时是这样的： 1234567891011121314151617async asyncTas">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/20221023145247.png">
-<meta property="article:published_time" content="2022-10-23T06:19:23.000Z">
-<meta property="article:modified_time" content="2022-10-23T07:18:43.821Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/20221023162206.png">
+<meta property="article:published_time" content="2022-10-19T02:02:46.000Z">
+<meta property="article:modified_time" content="2022-10-23T08:22:51.991Z">
 <meta property="article:author" content="Hu Yu">
+<meta property="article:tag" content="js">
+<meta property="article:tag" content="axios">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/20221023145247.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/20221023162206.png">
   
   
   
-  <title>前端调试代码技巧 - huyu</title>
+  <title>如何优雅处理 async await 错误 - huyu</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -208,13 +210,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://raw.githubusercontent.com/pan52yu/blogImg/main/20221023145247.png') no-repeat center center; background-size: cover;">
+     style="background: url('https://raw.githubusercontent.com/pan52yu/blogImg/main/20221023161939.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="前端调试代码技巧"></span>
+            <span id="subtitle" data-typed-text="如何优雅处理 async await 错误"></span>
           
         </div>
 
@@ -230,8 +232,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-23 14:19" pubdate>
-          2022年10月23日 下午
+        <time datetime="2022-10-19 10:02" pubdate>
+          2022年10月19日 上午
         </time>
       </span>
     
@@ -242,7 +244,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          829 字
+          1.5k 字
         
       </span>
     
@@ -253,7 +255,7 @@
         
         
         
-          7 分钟
+          13 分钟
         
       </span>
     
@@ -291,55 +293,33 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">前端调试代码技巧</h1>
+            <h1 style="display: none">如何优雅处理 async await 错误</h1>
             
             
               <div class="markdown-body">
                 
                 <blockquote>
+<p>借用 <code>await-to-js</code> 库<br><a target="_blank" rel="noopener" href="https://github.com/scopsy/await-to-js">https://github.com/scopsy/await-to-js</a><br><a target="_blank" rel="noopener" href="https://blog.grossman.io/how-to-write-async-await-without-try-catch-blocks-in-javascript/">https://blog.grossman.io/how-to-write-async-await-without-try-catch-blocks-in-javascript/</a></p>
+</blockquote>
 <ul>
-<li>待完善</li>
-</ul>
-</blockquote>
-<blockquote>
-<p>寻求简单有效的debug方法，少走弯路，更高效的修改bug</p>
-</blockquote>
-<h4 id="1、setTimeout"><a href="#1、setTimeout" class="headerlink" title="1、setTimeout"></a>1、setTimeout</h4><p><img src="https://raw.githubusercontent.com/pan52yu/blogImg/main/settimeout-debug.gif" srcset="/img/loading.gif" lazyload alt="悬浮DOM"></p>
-<blockquote>
-<p>在我们的代码中，可能会遇到鼠标悬浮出现提示，此时想要调试悬浮的DOM时会很困难，此时可以使用定时器去进行一个debug</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">debugger</span>;<br>&#125;, <span class="hljs-number">3000</span>);<br></code></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/pan52yu/blogImg/main/debugger.gif" srcset="/img/loading.gif" lazyload alt="debugger"></p>
-<h4 id="2、console"><a href="#2、console" class="headerlink" title="2、console"></a>2、console</h4><blockquote>
-<p>开发中使用最多的<code>console</code></p>
-</blockquote>
-<h4 id="3、debugger"><a href="#3、debugger" class="headerlink" title="3、debugger"></a>3、debugger</h4><blockquote>
-<ul>
-<li><p>直接在代码中需要断点的地方，直接debugger即可，当JS执行到该语句时会自动暂停，页面会出现蒙层卡住，然后会自动跳转到debugger代码处，处于当前执行环境的数据鼠标移上，该数据会显示出来</p>
+<li><p>之前处理异步请求时是这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">async</span> <span class="hljs-title function_">asyncTask</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>      <span class="hljs-keyword">const</span> asyncFuncARes = <span class="hljs-keyword">await</span> <span class="hljs-title function_">asyncFuncA</span>()<br>    &#125; <span class="hljs-keyword">catch</span>(error) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(error)<br>    &#125;<br>    <span class="hljs-keyword">try</span> &#123;<br>      <span class="hljs-keyword">const</span> asyncFuncBRes = <span class="hljs-keyword">await</span> <span class="hljs-title function_">asyncFuncB</span>(asyncFuncARes)<br>    &#125; <span class="hljs-keyword">catch</span>(error) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(error)<br>    &#125;<br>    <span class="hljs-keyword">try</span> &#123;<br>      <span class="hljs-keyword">const</span> asyncFuncCRes = <span class="hljs-keyword">await</span> <span class="hljs-title function_">asyncFuncC</span>(asyncFuncBRes)<br>    &#125; <span class="hljs-keyword">catch</span>(error) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(error)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>当点击页面中的前进按钮时，就会跳转到下一个断点处，全部跳转完成后断点就会结束。</p>
+<li><p>使用 <code>await-to-js</code> 后是这样的:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> to <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./to.js&#x27;</span>;<br><span class="hljs-keyword">function</span> <span class="hljs-keyword">async</span> <span class="hljs-title function_">asyncTask</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">const</span> [err, asyncFuncARes]  = <span class="hljs-keyword">await</span> <span class="hljs-title function_">to</span>(<span class="hljs-title function_">asyncFuncA</span>())<br>	<span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> (error);<br><br>	<span class="hljs-keyword">const</span> [err, asyncFuncBRes]  = <span class="hljs-keyword">await</span> <span class="hljs-title function_">tp</span>(<span class="hljs-title function_">asyncFuncB</span>(asyncFuncARes))<br>	<span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> (error);<br><br>	<span class="hljs-keyword">const</span> [err, asyncFuncCRes]  = <span class="hljs-keyword">await</span> <span class="hljs-title function_">to</span>(<span class="hljs-title function_">asyncFuncC</span>(asyncFuncBRes)<br>	<span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> (error);<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="await-to-js-源码分析"><a href="#await-to-js-源码分析" class="headerlink" title="await-to-js 源码分析"></a><code>await-to-js</code> 源码分析</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">to</span>(<span class="hljs-params">promise, errorExt</span>) &#123;<br>    <span class="hljs-keyword">return</span> promise<br>        .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> [<span class="hljs-literal">null</span>, data])<br>        .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">if</span> (errorExt) &#123;<br>            <span class="hljs-keyword">const</span> parsedError = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>(&#123;&#125;, err, errorExt);<br>            <span class="hljs-keyword">return</span> [parsedError, <span class="hljs-literal">undefined</span>];<br>        &#125;<br>        <span class="hljs-keyword">return</span> [err, <span class="hljs-literal">undefined</span>];<br>    &#125;);<br>&#125;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> to;<br></code></pre></td></tr></table></figure>
+<p>这里我们先抛开errorExt这个自定义的错误文本,核心代码是这样的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">to</span>(<span class="hljs-params">promise</span>) &#123;<br>    <span class="hljs-keyword">return</span> promise<br>        .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> [<span class="hljs-literal">null</span>, data]) <span class="hljs-comment">// 成功,返回[null,响应结果]</span><br>        .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> &#123;<br>            <span class="hljs-keyword">return</span> [err, <span class="hljs-literal">undefined</span>]; <span class="hljs-comment">// 失败,返回[错误信息,undefined]</span><br>    &#125;);<br>&#125;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> to;<br></code></pre></td></tr></table></figure>
+<p>代码逻辑结论</p>
+<ul>
+<li><p>无论成功还是失败都返回一个数组,数组的第一项是和错误相关的,数组的第二项是和响应结果相关的</p>
+</li>
+<li><p>成功的话数组第一项也就是错误信息为空,数组第二项也就是响应结果正常返回</p>
+</li>
+<li><p>失败的话数组第一项也就是错误信息为错误信息,数组第二项也就是响应结果返回undefined</p>
 </li>
 </ul>
-</blockquote>
-<h4 id="4、浏览器断点-source断点"><a href="#4、浏览器断点-source断点" class="headerlink" title="4、浏览器断点(source断点)"></a>4、浏览器断点(source断点)</h4><p>可以直接在浏览器里断点，在行数的地方可以直接加上断点，F8可以直接跳转到下一个断点，F10可以单步骤调试，F11可以直接进入方法，也就相当于单步调试了。</p>
-<p><img src="https://raw.githubusercontent.com/pan52yu/blogImg/main/20221023151039.png" srcset="/img/loading.gif" lazyload alt="source断点"></p>
-<ul>
-<li>从左到右，各个图标表示的功能分别为：<ul>
-<li><code>Pause/Resume script execution（F8 或 Ctrl + \）</code>：暂停&#x2F;恢复脚本执行（程序执行到下一断点停止）；</li>
-<li><code>Step over next function call（F10 或 Ctrl + &#39;）</code>：执行到下一步的函数调用（跳到下一行）；</li>
-<li><code>Step into next function call（F11 或 Ctrl + ;）</code>：进入当前函数；</li>
-<li>Step out of current function（shift + F11 或 Ctrl + shift + ;）&#96;：跳出当前执行函</li>
-<li><code>Step（F9）</code>：跳到下一条执行语句；</li>
-<li><code>Deactive/Active all breakpoints</code>: 关闭&#x2F;开启所有断点（不会取消）；</li>
-<li><code>Pause on exceptions</code>: 异常情况自动断点设置，浏览器会在程序发生异常的那一行设置断点，即当程序会在异常发生处暂停；</li>
-</ul>
-</li>
-</ul>
-<h4 id="5、浏览器控制台调试"><a href="#5、浏览器控制台调试" class="headerlink" title="5、浏览器控制台调试"></a>5、浏览器控制台调试</h4><p><img src="https://raw.githubusercontent.com/pan52yu/blogImg/main/image-20221023151519483.png" srcset="/img/loading.gif" lazyload alt="浏览器控制台"></p>
-<blockquote>
-<p>浏览器控制台可以直接调试一些样式问题</p>
-</blockquote>
 
                 
               </div>
@@ -348,6 +328,36 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8F%90%E5%8D%87/" class="category-chain-item">提升</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/js/">#js</a>
+      
+        <a href="/tags/axios/">#axios</a>
+      
+    </div>
   
 </div>
 
@@ -357,8 +367,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>前端调试代码技巧</div>
-      <div>https://pan52yu.github.io/2022/前端调试代码技巧/</div>
+      <div>如何优雅处理 async await 错误</div>
+      <div>https://pan52yu.github.io/2022/如何优雅处理-async-await-错误/</div>
     </div>
     <div class="license-meta">
       
@@ -370,7 +380,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月23日</div>
+          <div>2022年10月19日</div>
         </div>
       
       
@@ -402,12 +412,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2022/%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E4%BB%A3%E7%A0%81%E6%8A%80%E5%B7%A7/" title="前端调试代码技巧">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">前端调试代码技巧</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%A4%84%E7%90%86-async-await-%E9%94%99%E8%AF%AF/" title="如何优雅处理 async await 错误">
-                        <span class="hidden-mobile">如何优雅处理 async await 错误</span>
+                      <a href="/2022/pdf%E9%A2%84%E8%A7%88/" title="pdf预览">
+                        <span class="hidden-mobile">pdf预览</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

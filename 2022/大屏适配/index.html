@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="huyu">
 <meta property="og:description" content="适配方案适用场景常用数据化大屏的echarts组件和ui组件（不包含高德地图） 实现原理css3的scale可以等比缩放内容并且不会导致元素失帧，所以可以借助动态计算宽高比来确保大屏始终是按照设计稿的宽高比居中显示在显示器内！ 使用方法1. 在需要适配的组件最外侧的容器绑定内联样式123456789101112131415&lt;section class&#x3D;&quot;page-layout&amp;qu">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/20221022221507.png">
+<meta property="og:image" content="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/20221028203147.png?x-oss-process=style/huyu">
 <meta property="article:published_time" content="2022-05-01T07:02:17.000Z">
-<meta property="article:modified_time" content="2022-10-23T06:14:41.995Z">
+<meta property="article:modified_time" content="2022-10-28T12:32:01.902Z">
 <meta property="article:author" content="Hu Yu">
 <meta property="article:tag" content="适配">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/pan52yu/blogImg/main/20221022221507.png">
+<meta name="twitter:image" content="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/20221028203147.png?x-oss-process=style/huyu">
   
   
   
@@ -209,7 +209,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://raw.githubusercontent.com/pan52yu/blogImg/main/20221022221507.png') no-repeat center center; background-size: cover;">
+     style="background: url('https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/20221028203147.png?x-oss-process=style/huyu') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -301,7 +301,7 @@
 <h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>css3的scale可以等比缩放内容并且不会导致元素失帧，所以可以借助动态计算宽高比来确保大屏始终是按照设计稿的宽高比居中显示在显示器内！</p>
 <h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="1-在需要适配的组件最外侧的容器绑定内联样式"><a href="#1-在需要适配的组件最外侧的容器绑定内联样式" class="headerlink" title="1. 在需要适配的组件最外侧的容器绑定内联样式"></a>1. 在需要适配的组件最外侧的容器绑定内联样式</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">section</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;page-layout&quot;</span>&gt;</span><br>	<span class="hljs-comment">&lt;!--  :style=&quot;scaleStyle&quot; 则为内联样式  --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">section</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;page-layout__inner&quot;</span> <span class="hljs-attr">:class</span>=<span class="hljs-string">&quot;showBg&quot;</span> <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;scaleStyle&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">section</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;page-layout__inner__header&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">ScreenTop</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">section</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;page-layout__inner__main&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">ScreenMain</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span><br>  <span class="hljs-comment">&lt;!-- 高德地图 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">section</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;page-layout__map&quot;</span> <span class="hljs-attr">v-show</span>=<span class="hljs-string">&quot;showGD&quot;</span> <span class="hljs-attr">:style</span>=<span class="hljs-string">&quot;mapBoxStyle&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">ScreenMap</span> /&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<h4 id="2-定义data数据"><a href="#2-定义data数据" class="headerlink" title="2. 定义data数据"></a>2. 定义data数据</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>        <span class="hljs-attr">scaleStyle</span>: <span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-comment">// 内联样式 </span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="2-定义data数据"><a href="#2-定义data数据" class="headerlink" title="2. 定义data数据"></a>2. 定义data数据</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>        <span class="hljs-attr">scaleStyle</span>: <span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-comment">// 内联样式</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
 

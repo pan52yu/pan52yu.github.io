@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>用img标签实现icon的时候对不齐文字</title>
+      <link href="/posts/48966.html"/>
+      <url>/posts/48966.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="到底为什么用img标签实现icon的时候经常对不齐文字"><a href="#到底为什么用img标签实现icon的时候经常对不齐文字" class="headerlink" title="到底为什么用img标签实现icon的时候经常对不齐文字"></a>到底为什么用img标签实现icon的时候经常对不齐文字</h1><ul><li>用img标签直接插入图片会出现对不齐的情况</li></ul><p><img src="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/image-20221227153953411.png?x-oss-process=style/huyu" alt="baseline"></p><blockquote><p>因为图片的<code>vertical-align</code>默认是<code>baseline</code>的</p></blockquote><ul><li>如果设为middle，会偏下</li></ul><img src="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/image-20221227154246039.png?x-oss-process=style/huyu" alt="middle" style="zoom:50%;" /><blockquote><p>但是对于英文字母看着是居中的，对于汉字会偏下</p></blockquote><ul><li>怎么解决呢</li></ul><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">img</span> &#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">1em</span>,</span><br><span class="line">    vertical-align: -<span class="number">0.15em</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><img src="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/image-20221227154445688.png?x-oss-process=style/huyu" alt="解决"></p><blockquote><p>这样就对齐了，而且字体大小改变，图片也会居中显示</p></blockquote>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 小技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>vue 项目路径</title>
       <link href="/posts/45836.html"/>
       <url>/posts/45836.html</url>

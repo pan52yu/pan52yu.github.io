@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>封装Vue3组件小技巧：插槽转发 | EvanSky</title><meta name="author" content="EvanSky"><meta name="copyright" content="EvanSky"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="你不知道的封装Vue3组件小技巧：插槽转发">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>封装Vue3组件小技巧：插槽转发 | EvanSky</title><meta name="author" content="EvanSky"><meta name="copyright" content="EvanSky"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="你不知道的封装Vue3组件小技巧：插槽转发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="封装Vue3组件小技巧：插槽转发">
 <meta property="og:url" content="https://www.huyu001.top/posts/8021.html">
@@ -10,13 +10,13 @@
 <meta property="article:modified_time" content="2023-12-21T01:19:19.020Z">
 <meta property="article:author" content="EvanSky">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/wallhaven-727x83_1280x720.png"><link rel="shortcut icon" href="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/钢铁侠.png?x-oss-process=style/huyu"><link rel="canonical" href="https://www.huyu001.top/posts/8021.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+<meta name="twitter:image" content="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/wallhaven-727x83_1280x720.png"><link rel="shortcut icon" href="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/钢铁侠.png?x-oss-process=style/huyu"><link rel="canonical" href="https://www.huyu001.top/posts/8021.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
   translate: undefined,
   noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":280},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":280},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -27,7 +27,7 @@
     post: false
   },
   runtime: '天',
-  date_suffix: {
+  dateSuffix: {
     just: '刚刚',
     min: '分钟前',
     hour: '小时前',
@@ -36,12 +36,10 @@
   },
   copyright: {"limitCount":500,"languages":{"author":"作者: EvanSky","link":"链接: ","source":"来源: EvanSky","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
   lightbox: 'fancybox',
-  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
   },
   isPhotoFigcaption: false,
   islazyload: false,
@@ -49,7 +47,8 @@
   percent: {
     toc: true,
     rightside: false,
-  }
+  },
+  autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: '封装Vue3组件小技巧：插槽转发',
   isPost: true,
@@ -57,78 +56,77 @@
   isHighlightShrink: false,
   isToc: true,
   postUpdate: '2023-12-21 09:19:19'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
         }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
-
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
       }
-    }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-    win.getCSS = url => new Promise((resolve, reject) => {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = url
-      link.onload = () => resolve()
-      link.onerror = () => reject()
-      document.head.appendChild(link)
-    })
-  
-      win.activateDarkMode = function () {
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
         document.documentElement.setAttribute('data-theme', 'dark')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
           document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
         }
       }
-      win.activateLightMode = function () {
+      win.activateLightMode = () => {
         document.documentElement.setAttribute('data-theme', 'light')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
           document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
@@ -136,9 +134,9 @@
       }
       const t = saveToLocal.get('theme')
     
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
-        
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
       const asideStatus = saveToLocal.get('aside-status')
       if (asideStatus !== undefined) {
         if (asideStatus === 'hide') {
@@ -148,17 +146,17 @@
         }
       }
     
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
       }
-    }
-    detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/20230223150133.png?x-oss-process=style/huyu" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">52</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-solid fa-screwdriver-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tools/learn/"><i class="fa-fw fas fa-graduation-cap"></i><span> 工具</span></a></li><li><a class="site-page child" href="/tools/Website/"><i class="fa-fw fas fa-file"></i><span> 文档</span></a></li><li><a class="site-page child" href="/tools/templates/"><i class="fa-fw fas fa-code"></i><span> 模板</span></a></li><li><a class="site-page child" href="/tools/plugs/"><i class="fa-fw fas fa-cube"></i><span> 插件</span></a></li><li><a class="site-page child" href="/tools/vpn/"><i class="fa-fw fas fa-water-ladder"></i><span> VPN</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-message"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> Love</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/love/"><i class="fa-fw fas fa-heart"></i><span> Love</span></a></li><li><a class="site-page child" href="/love/recipes/"><i class="fa-fw fas fa-utensils"></i><span> 菜谱</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/wallhaven-727x83_1280x720.png')"><nav id="nav"><span id="blog-info"><a href="/" title="EvanSky"><span class="site-name">EvanSky</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-solid fa-screwdriver-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tools/learn/"><i class="fa-fw fas fa-graduation-cap"></i><span> 工具</span></a></li><li><a class="site-page child" href="/tools/Website/"><i class="fa-fw fas fa-file"></i><span> 文档</span></a></li><li><a class="site-page child" href="/tools/templates/"><i class="fa-fw fas fa-code"></i><span> 模板</span></a></li><li><a class="site-page child" href="/tools/plugs/"><i class="fa-fw fas fa-cube"></i><span> 插件</span></a></li><li><a class="site-page child" href="/tools/vpn/"><i class="fa-fw fas fa-water-ladder"></i><span> VPN</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-message"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> Love</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/love/"><i class="fa-fw fas fa-heart"></i><span> Love</span></a></li><li><a class="site-page child" href="/love/recipes/"><i class="fa-fw fas fa-utensils"></i><span> 菜谱</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">封装Vue3组件小技巧：插槽转发</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-12-12T09:59:24.000Z" title="发表于 2023-12-12 17:59:24">2023-12-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-12-21T01:19:19.020Z" title="更新于 2023-12-21 09:19:19">2023-12-21</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="封装Vue3组件小技巧：插槽转发"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url('https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/wallhaven-727x83_1280x720.png');"></div><article class="post-content" id="article-container"><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在 Vue 中，我们可以使用插槽来给子组件传递内容。但是，如果我们需要给多个组件传递插槽，并且这些组件之间存在重名的插槽，该如何解决呢？</p>
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="/css/custom.css"  media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/20230223150133.png?x-oss-process=style/huyu" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">52</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-solid fa-screwdriver-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tools/learn/"><i class="fa-fw fas fa-graduation-cap"></i><span> 工具</span></a></li><li><a class="site-page child" href="/tools/Website/"><i class="fa-fw fas fa-file"></i><span> 文档</span></a></li><li><a class="site-page child" href="/tools/templates/"><i class="fa-fw fas fa-code"></i><span> 模板</span></a></li><li><a class="site-page child" href="/tools/plugs/"><i class="fa-fw fas fa-cube"></i><span> 插件</span></a></li><li><a class="site-page child" href="/tools/vpn/"><i class="fa-fw fas fa-water-ladder"></i><span> VPN</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-message"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> Love</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/love/"><i class="fa-fw fas fa-heart"></i><span> Love</span></a></li><li><a class="site-page child" href="/love/recipes/"><i class="fa-fw fas fa-utensils"></i><span> 菜谱</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/wallhaven-727x83_1280x720.png')"><nav id="nav"><span id="blog-info"><a href="/" title="EvanSky"><span class="site-name">EvanSky</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-solid fa-screwdriver-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tools/learn/"><i class="fa-fw fas fa-graduation-cap"></i><span> 工具</span></a></li><li><a class="site-page child" href="/tools/Website/"><i class="fa-fw fas fa-file"></i><span> 文档</span></a></li><li><a class="site-page child" href="/tools/templates/"><i class="fa-fw fas fa-code"></i><span> 模板</span></a></li><li><a class="site-page child" href="/tools/plugs/"><i class="fa-fw fas fa-cube"></i><span> 插件</span></a></li><li><a class="site-page child" href="/tools/vpn/"><i class="fa-fw fas fa-water-ladder"></i><span> VPN</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fas fa-message"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> Love</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/love/"><i class="fa-fw fas fa-heart"></i><span> Love</span></a></li><li><a class="site-page child" href="/love/recipes/"><i class="fa-fw fas fa-utensils"></i><span> 菜谱</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">封装Vue3组件小技巧：插槽转发</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-12-12T09:59:24.000Z" title="发表于 2023-12-12 17:59:24">2023-12-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-12-21T01:19:19.020Z" title="更新于 2023-12-21 09:19:19">2023-12-21</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="封装Vue3组件小技巧：插槽转发"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在 Vue 中，我们可以使用插槽来给子组件传递内容。但是，如果我们需要给多个组件传递插槽，并且这些组件之间存在重名的插槽，该如何解决呢？</p>
 <p>本文将介绍一种使用插槽别名和插槽转发的方案来解决这个问题。</p>
 <p><strong>示例代码：</strong></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">&lt;!-- CompSlot.vue --&gt;</span><br><span class="line">&lt;script setup lang="ts"&gt;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;a-input /&gt;</span><br><span class="line">    &lt;a-input-number /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></tbody></table></figure>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">&lt;!-- 使用 CompSlot 组件 --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;CompSlot&gt;&lt;/CompSlot&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script setup lang="ts"&gt;</span><br><span class="line">import CompSlot from './CompSlot.vue'</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- CompSlot.vue --&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;a-input /&gt;</span><br><span class="line">    &lt;a-input-number /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- 使用 CompSlot 组件 --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;CompSlot&gt;&lt;/CompSlot&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import CompSlot from &#x27;./CompSlot.vue&#x27;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="怎么传props"><a href="#怎么传props" class="headerlink" title="怎么传props"></a>怎么传props</h2><p>如果需要传 <code>props</code> 进去的话，我可以定义两个参数：</p>
 <ul>
 <li><p><code>inputProps</code>：接收 <code>Input</code> 的参数</p>
@@ -166,19 +164,19 @@
 <li><p><code>numberProps</code>：接收 <code>InputNumber</code> 的参数</p>
 </li>
 </ul>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">&lt;!-- CompSlot.vue --&gt;</span><br><span class="line">&lt;script setup lang="ts"&gt;</span><br><span class="line">import { PropType } from 'vue'</span><br><span class="line">import { InputNumberProps, InputProps } from 'ant-design-vue'</span><br><span class="line"></span><br><span class="line">defineProps({</span><br><span class="line">	inputProps: {</span><br><span class="line">		type: Object as PropType&lt;InputProps&gt;,</span><br><span class="line">		default: () =&gt; ({}),</span><br><span class="line">	},</span><br><span class="line">	numberProps: {</span><br><span class="line">		type: Object as PropType&lt;InputNumberProps&gt;,</span><br><span class="line">		default: () =&gt; ({}),</span><br><span class="line">	},</span><br><span class="line">})</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;div&gt;</span><br><span class="line">		&lt;a-input v-bind="{ ...inputProps }"&gt;&lt;/a-input&gt;</span><br><span class="line">		&lt;a-input-number v-bind="{ ...numberProps }"&gt;&lt;/a-input-number&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- CompSlot.vue --&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; PropType &#125; from &#x27;vue&#x27;</span><br><span class="line">import &#123; InputNumberProps, InputProps &#125; from &#x27;ant-design-vue&#x27;</span><br><span class="line"></span><br><span class="line">defineProps(&#123;</span><br><span class="line">	inputProps: &#123;</span><br><span class="line">		type: Object as PropType&lt;InputProps&gt;,</span><br><span class="line">		default: () =&gt; (&#123;&#125;),</span><br><span class="line">	&#125;,</span><br><span class="line">	numberProps: &#123;</span><br><span class="line">		type: Object as PropType&lt;InputNumberProps&gt;,</span><br><span class="line">		default: () =&gt; (&#123;&#125;),</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;div&gt;</span><br><span class="line">		&lt;a-input v-bind=&quot;&#123; ...inputProps &#125;&quot;&gt;&lt;/a-input&gt;</span><br><span class="line">		&lt;a-input-number v-bind=&quot;&#123; ...numberProps &#125;&quot;&gt;&lt;/a-input-number&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
 <p>这样就能分别给这两个组件传参数了，但这不是今天文章的重点</p>
 <h2 id="怎么传插槽"><a href="#怎么传插槽" class="headerlink" title="怎么传插槽"></a>怎么传插槽</h2><p>上面是给这两个组件传 <code>props</code>，那如果要给这两个组件传插槽怎么做呢？我们首先来要思考一个问题，这两个组件具备一些重名的插槽名称，就比如 <code>prefix</code> 这个插槽</p>
 <p><img src="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/20231212171230.png" alt="prefix"></p>
 <p>那我们要怎么去做，才能更好地给这两个组件传插槽呢？先来讨论外部怎么传，想要保证这两个组件的插槽传递不发生冲突，咱们可以使用<strong>插槽别名</strong>，这也是很多组件库现在采用的方案，代码如下</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">&lt;!-- 使用 CompSlot 组件 --&gt;</span><br><span class="line">&lt;script setup lang="ts"&gt;</span><br><span class="line">import CompSlot from '@/components/CompSlot.vue'</span><br><span class="line">import { EditOutlined, FormOutlined } from '@ant-design/icons-vue'</span><br><span class="line"></span><br><span class="line">const inputSlots = {</span><br><span class="line">  // 插槽别名</span><br><span class="line">  prefix: 'input-prefix',</span><br><span class="line">}</span><br><span class="line">const numberSlots = {</span><br><span class="line">  // 插槽别名</span><br><span class="line">  prefix: 'number-prefix',</span><br><span class="line">}</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class="card"&gt;</span><br><span class="line">    &lt;CompSlot :input-slots="inputSlots" :number-slots="numberSlots"&gt;</span><br><span class="line">      &lt;!-- 使用插槽 --&gt;</span><br><span class="line">      &lt;template #input-prefix&gt; &lt;EditOutlined /&gt; &lt;/template&gt;</span><br><span class="line">      &lt;template #number-prefix&gt; &lt;FormOutlined /&gt; &lt;/template&gt;</span><br><span class="line">    &lt;/Comp&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- 使用 CompSlot 组件 --&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import CompSlot from &#x27;@/components/CompSlot.vue&#x27;</span><br><span class="line">import &#123; EditOutlined, FormOutlined &#125; from &#x27;@ant-design/icons-vue&#x27;</span><br><span class="line"></span><br><span class="line">const inputSlots = &#123;</span><br><span class="line">  // 插槽别名</span><br><span class="line">  prefix: &#x27;input-prefix&#x27;,</span><br><span class="line">&#125;</span><br><span class="line">const numberSlots = &#123;</span><br><span class="line">  // 插槽别名</span><br><span class="line">  prefix: &#x27;number-prefix&#x27;,</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;card&quot;&gt;</span><br><span class="line">    &lt;CompSlot :input-slots=&quot;inputSlots&quot; :number-slots=&quot;numberSlots&quot;&gt;</span><br><span class="line">      &lt;!-- 使用插槽 --&gt;</span><br><span class="line">      &lt;template #input-prefix&gt; &lt;EditOutlined /&gt; &lt;/template&gt;</span><br><span class="line">      &lt;template #number-prefix&gt; &lt;FormOutlined /&gt; &lt;/template&gt;</span><br><span class="line">    &lt;/Comp&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
 <p>那么组件内部应该怎么去接收这些插槽呢？这就可以使用<strong>插槽转发</strong>的方案，我们先看看 <code>CompSlot</code> 内部遍历 <code>inputSlots</code> 是什么</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">&lt;!-- CompSlot.vue --&gt;</span><br><span class="line">&lt;script setup lang="ts"&gt;</span><br><span class="line">defineProps({</span><br><span class="line">  inputSlots: {</span><br><span class="line">    type: Object,</span><br><span class="line">    default: () =&gt; ({}),</span><br><span class="line">  },</span><br><span class="line">  numberSlots: {</span><br><span class="line">    type: Object,</span><br><span class="line">    default: () =&gt; ({}),</span><br><span class="line">  },</span><br><span class="line">})</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;template v-for="(_, name) in inputSlots" :key="name"&gt; {{ name }} --&gt; {{ _ }&lt;/template&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- CompSlot.vue --&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">defineProps(&#123;</span><br><span class="line">  inputSlots: &#123;</span><br><span class="line">    type: Object,</span><br><span class="line">    default: () =&gt; (&#123;&#125;),</span><br><span class="line">  &#125;,</span><br><span class="line">  numberSlots: &#123;</span><br><span class="line">    type: Object,</span><br><span class="line">    default: () =&gt; (&#123;&#125;),</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;template v-for=&quot;(_, name) in inputSlots&quot; :key=&quot;name&quot;&gt; &#123;&#123; name &#125;&#125; --&gt; &#123;&#123; _ &#125;&lt;/template&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
 <p>输出<br><code>prefix --&gt; input-prefix</code></p>
 <p>可以看到当 <code>v-for</code> 遍历一个对象的时候，键值对是倒过来的，跟数组不一样</p>
 <p>我们可以利用这个特性，做<strong>插槽转发</strong></p>
 <p>最终 <code>CompSlot.vue</code> 的代码</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">&lt;!-- CompSlot.vue --&gt;</span><br><span class="line">&lt;script setup lang="ts"&gt;</span><br><span class="line">import { InputNumberProps, InputProps } from 'ant-design-vue'</span><br><span class="line">import { PropType } from 'vue'</span><br><span class="line"> </span><br><span class="line">defineProps({</span><br><span class="line">  inputProps: {</span><br><span class="line">    type: Object as PropType&lt;InputProps&gt;,</span><br><span class="line">    default: () =&gt; ({}),</span><br><span class="line">  },</span><br><span class="line">  numberProps: {</span><br><span class="line">    type: Object as PropType&lt;InputNumberProps&gt;,</span><br><span class="line">    default: () =&gt; ({}),</span><br><span class="line">  },</span><br><span class="line">  inputSlots: {</span><br><span class="line">    type: Object,</span><br><span class="line">    default: () =&gt; ({}),</span><br><span class="line">  },</span><br><span class="line">  numberSlots: {</span><br><span class="line">    type: Object,</span><br><span class="line">    default: () =&gt; ({}),</span><br><span class="line">  },</span><br><span class="line">})</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;a-input v-bind="{ ...inputProps }"&gt;</span><br><span class="line">      &lt;template v-for="(_, name) in inputSlots" :key="name" #[name]&gt;</span><br><span class="line">        &lt;slot :name="inputSlots[name]" /&gt;</span><br><span class="line">      &lt;/template&gt;</span><br><span class="line">    &lt;/a-input&gt;</span><br><span class="line">    &lt;a-input-number v-bind="{ ...numberProps }"&gt;</span><br><span class="line">      &lt;template v-for="(_, name) in numberSlots" :key="name" #[name]&gt;</span><br><span class="line">        &lt;slot :name="numberSlots[name]" /&gt;</span><br><span class="line">      &lt;/template&gt;</span><br><span class="line">    &lt;/a-input-number&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;&lt;/style&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- CompSlot.vue --&gt;</span><br><span class="line">&lt;script setup lang=&quot;ts&quot;&gt;</span><br><span class="line">import &#123; InputNumberProps, InputProps &#125; from &#x27;ant-design-vue&#x27;</span><br><span class="line">import &#123; PropType &#125; from &#x27;vue&#x27;</span><br><span class="line"> </span><br><span class="line">defineProps(&#123;</span><br><span class="line">  inputProps: &#123;</span><br><span class="line">    type: Object as PropType&lt;InputProps&gt;,</span><br><span class="line">    default: () =&gt; (&#123;&#125;),</span><br><span class="line">  &#125;,</span><br><span class="line">  numberProps: &#123;</span><br><span class="line">    type: Object as PropType&lt;InputNumberProps&gt;,</span><br><span class="line">    default: () =&gt; (&#123;&#125;),</span><br><span class="line">  &#125;,</span><br><span class="line">  inputSlots: &#123;</span><br><span class="line">    type: Object,</span><br><span class="line">    default: () =&gt; (&#123;&#125;),</span><br><span class="line">  &#125;,</span><br><span class="line">  numberSlots: &#123;</span><br><span class="line">    type: Object,</span><br><span class="line">    default: () =&gt; (&#123;&#125;),</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;a-input v-bind=&quot;&#123; ...inputProps &#125;&quot;&gt;</span><br><span class="line">      &lt;template v-for=&quot;(_, name) in inputSlots&quot; :key=&quot;name&quot; #[name]&gt;</span><br><span class="line">        &lt;slot :name=&quot;inputSlots[name]&quot; /&gt;</span><br><span class="line">      &lt;/template&gt;</span><br><span class="line">    &lt;/a-input&gt;</span><br><span class="line">    &lt;a-input-number v-bind=&quot;&#123; ...numberProps &#125;&quot;&gt;</span><br><span class="line">      &lt;template v-for=&quot;(_, name) in numberSlots&quot; :key=&quot;name&quot; #[name]&gt;</span><br><span class="line">        &lt;slot :name=&quot;numberSlots[name]&quot; /&gt;</span><br><span class="line">      &lt;/template&gt;</span><br><span class="line">    &lt;/a-input-number&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;&lt;/style&gt;</span><br></pre></td></tr></table></figure>
 <p>达到了我们想要的效果~</p>
 <p><img src="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/image-20231212171800813.png" alt="效果"></p>
 <p>在这种方案中，我们使用插槽别名来解决插槽名称冲突，并使用插槽转发来将插槽内容传递给子组件。该方案具有以下优点：</p>
@@ -187,40 +185,42 @@
 <li>可扩展性强</li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在 Vue 中，使用插槽别名和插槽转发可以有效地解决给多个组件传递插槽的问题。该方案具有代码简洁、易于理解、可扩展性强等优点。</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://www.huyu001.top">EvanSky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.huyu001.top/posts/8021.html">https://www.huyu001.top/posts/8021.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.huyu001.top" target="_blank">EvanSky</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/wallhaven-727x83_1280x720.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer=""></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/30367.html" title="docx、pptx、xlsx、pdf文件预览"><img class="cover" src="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/543-5438185_excel-icon-png.png" onerror="onerror=null;src='/img/404loading.gif'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">docx、pptx、xlsx、pdf文件预览</div></div></a></div></nav><hr><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Utterances</span><span class="switch-btn"></span><span class="second-comment">Valine</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/20230223150133.png?x-oss-process=style/huyu" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info__name">EvanSky</div><div class="author-info__description">今天你摸鱼了吗</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">52</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">26</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/pan52yu" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E4%BC%A0props"><span class="toc-number">2.</span> <span class="toc-text">怎么传props</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E4%BC%A0%E6%8F%92%E6%A7%BD"><span class="toc-number">3.</span> <span class="toc-text">怎么传插槽</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">©2020 - 2024 By EvanSky</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&amp;logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"></div></div><hr><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadUtterances () {
-  let ele = document.createElement('script')
-  ele.setAttribute('id', 'utterances_comment')
-  ele.setAttribute('src', 'https://utteranc.es/client.js')
-  ele.setAttribute('repo', 'pan52yu/hugoblogtalks')
-  ele.setAttribute('issue-term', 'pathname')
-  let nowTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
-  ele.setAttribute('theme', nowTheme)
-  ele.setAttribute('crossorigin', 'anonymous')
-  ele.setAttribute('async', 'true')
-  document.getElementById('utterances-wrap').insertAdjacentElement('afterbegin',ele)
-}
-
-function utterancesTheme () {
-  const iframe = document.querySelector('.utterances-frame')
-  if (iframe) {
-    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
-    const message = {
-      type: 'set-theme',
-      theme: theme
-    };
-    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.huyu001.top">EvanSky</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.huyu001.top/posts/8021.html">https://www.huyu001.top/posts/8021.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.huyu001.top" target="_blank">EvanSky</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/wallhaven-727x83_1280x720.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/30367.html" title="docx、pptx、xlsx、pdf文件预览"><img class="cover" src="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/543-5438185_excel-icon-png.png" onerror="onerror=null;src='/img/404loading.gif'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">docx、pptx、xlsx、pdf文件预览</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Utterances</span><span id="switch-btn"></span><span class="second-comment">Valine</span></div></div><div class="comment-wrap"><div><div id="utterances-wrap"></div></div><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/20230223150133.png?x-oss-process=style/huyu" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">EvanSky</div><div class="author-info__description">今天你摸鱼了吗</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">52</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/pan52yu" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E4%BC%A0props"><span class="toc-number">2.</span> <span class="toc-text">怎么传props</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E4%BC%A0%E6%8F%92%E6%A7%BD"><span class="toc-number">3.</span> <span class="toc-text">怎么传插槽</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By EvanSky</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadUtterances = () => {
+    let ele = document.createElement('script')
+    ele.id = 'utterances_comment'
+    ele.src = 'https://utteranc.es/client.js'
+    ele.setAttribute('repo', 'pan52yu/hugoblogtalks')
+    ele.setAttribute('issue-term', 'pathname')
+    const nowTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'photon-dark' : 'github-light'
+    ele.setAttribute('theme', nowTheme)
+    ele.crossOrigin = 'anonymous'
+    ele.async = true
+    document.getElementById('utterances-wrap').appendChild(ele)
   }
-}
 
-if ('Utterances' === 'Utterances' || !false) {
-  if (false) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
-  else loadUtterances()
-} else {
-  function loadOtherComment () {
-    loadUtterances()
+  const utterancesTheme = theme => {
+    const iframe = document.querySelector('.utterances-frame')
+    if (iframe) {
+      const theme = theme === 'dark' ? 'photon-dark' : 'github-light'
+      const message = {
+        type: 'set-theme',
+        theme: theme
+      };
+      iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+    }
   }
-}</script><script>function loadValine () {
-  function initValine () {
+
+  btf.addGlobalFn('themeChange', utterancesTheme, 'utterances')
+
+  if ('Utterances' === 'Utterances' || !false) {
+    if (false) btf.loadComment(document.getElementById('utterances-wrap'), loadUtterances)
+    else loadUtterances()
+  } else {
+    window.loadOtherComment = loadUtterances
+  }
+})()</script><script>(() => {
+  const initValine = () => {
     const valine = new Valine(Object.assign({
       el: '#vcomment',
       appId: 'scsk3LPMieELiM0wSlN9rBRw-gzGzoHsz',
@@ -233,46 +233,18 @@ if ('Utterances' === 'Utterances' || !false) {
     }, null))
   }
 
-  if (typeof Valine === 'function') initValine() 
-  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
-}
-
-if ('Utterances' === 'Valine' || !false) {
-  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
-  else setTimeout(loadValine, 0)
-} else {
-  function loadOtherComment () {
-    loadValine()
-  }
-}</script></div><script src="/js/sun_moon.js" async=""></script><script async="" src="//at.alicdn.com/t/font_2264842_3izu8i5eoc2.js"></script><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax="">
-  function butterfly_clock_anzhiyu_injector_config(){
-    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
-    console.log('已挂载butterfly_clock_anzhiyu')
-    if(parent_div_git) {
-      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
-    }
-  }
-  var elist = 'null'.split(',');
-  var cpage = location.pathname;
-  var epage = 'all';
-  var qweather_key = 'b16a1fa0e63c46a4b8f28abfb06ae3fe';
-  var gaud_map_key = 'e2b04289e870b005374ee030148d64fd&s=rsv3';
-  var baidu_ak_key = 'undefined';
-  var flag = 0;
-  var clock_rectangle = '120.23,30.21';
-  var clock_default_rectangle_enable = 'false';
-
-  for (var i=0;i<elist.length;i++){
-    if (cpage.includes(elist[i])){
-      flag++;
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
     }
   }
 
-  if ((epage ==='all')&&(flag == 0)){
-    butterfly_clock_anzhiyu_injector_config();
+  if ('Utterances' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
   }
-  else if (epage === cpage){
-    butterfly_clock_anzhiyu_injector_config();
-  }
-  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax="" src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script async="" src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body></html>
+})()</script></div><script src="/js/sun_moon.js" async></script><script async src="//at.alicdn.com/t/font_2264842_3izu8i5eoc2.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body></html>

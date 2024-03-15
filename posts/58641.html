@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>vue知识总结 | EvanSky</title><meta name="author" content="EvanSky"><meta name="copyright" content="EvanSky"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1、vue 修改数据页面不重新渲染 vue2是用过Object.defineProperty实现数据响应式, 组件初始化时，对 data 中的 item 进行递归遍历，对 item 的每一个属性进行劫持，添加 set , get 方法。我们后来 新加的属性 ，并没有通过Object.defineProperty设置成响应式数据，修改后不会视图更新  通过数组索引号修改了数组，界面会不会相应更新？为">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>vue知识总结 | EvanSky</title><meta name="author" content="EvanSky"><meta name="copyright" content="EvanSky"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1、vue 修改数据页面不重新渲染 vue2是用过Object.defineProperty实现数据响应式, 组件初始化时，对 data 中的 item 进行递归遍历，对 item 的每一个属性进行劫持，添加 set , get 方法。我们后来 新加的属性 ，并没有通过Object.d">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vue知识总结">
 <meta property="og:url" content="https://www.huyu001.top/posts/58641.html">
 <meta property="og:site_name" content="EvanSky">
-<meta property="og:description" content="1、vue 修改数据页面不重新渲染 vue2是用过Object.defineProperty实现数据响应式, 组件初始化时，对 data 中的 item 进行递归遍历，对 item 的每一个属性进行劫持，添加 set , get 方法。我们后来 新加的属性 ，并没有通过Object.defineProperty设置成响应式数据，修改后不会视图更新  通过数组索引号修改了数组，界面会不会相应更新？为">
+<meta property="og:description" content="1、vue 修改数据页面不重新渲染 vue2是用过Object.defineProperty实现数据响应式, 组件初始化时，对 data 中的 item 进行递归遍历，对 item 的每一个属性进行劫持，添加 set , get 方法。我们后来 新加的属性 ，并没有通过Object.d">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/wallhaven-rd2x5w_1920x1080.webp?x-oss-process=style/huyu">
 <meta property="article:published_time" content="2022-02-11T13:02:13.000Z">
@@ -639,7 +639,7 @@
 <p>2、es提出的import(推荐使用这种方式) <code>const HelloWorld = （）=&gt; import(&#39;需要加载的模块地址&#39;)</code></p>
 </blockquote>
 <p>通过魔法注释webpackChunkName修改名称，打包时就会显示修改后的新名称</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; name &#125; = <span class="keyword">await</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName:&quot;newName&quot;*/</span><span class="string">&#x27;路径&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; name &#125; = <span class="keyword">await</span> <span class="title function_">import</span>(<span class="comment">/* webpackChunkName:&quot;newName&quot;*/</span><span class="string">&#x27;路径&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <h4 id="24、如何理解vue的key属性"><a href="#24、如何理解vue的key属性" class="headerlink" title="24、如何理解vue的key属性"></a>24、如何理解vue的key属性</h4><p><img src="https://huyu-blog.oss-cn-hangzhou.aliyuncs.com/img/GMFRTZ1Ew2igUmP.png?x-oss-process=style/huyu" alt="image-20220811205624543"></p>
 <blockquote>
 <pre><code>          **key 是为 Vue 中 vnode 的唯一标记，通过这个 key，我们的 diff 操作可以更准确、更快速，以便高效的更新虚拟 DOM**
